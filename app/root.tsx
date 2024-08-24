@@ -6,7 +6,18 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import './i18n';
+
+
+
 export default function App() {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.changeLanguage('de');
+  }, [i18n]);
   return (
     <html>
       <head>
