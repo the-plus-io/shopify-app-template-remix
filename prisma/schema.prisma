@@ -9,8 +9,8 @@ generator client {
 // enough when changing adapters.
 // See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
 datasource db {
-  provider = "sqlite"
-  url      = "file:dev.sqlite"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Session {
@@ -19,7 +19,7 @@ model Session {
   state         String
   isOnline      Boolean   @default(false)
   scope         String?
-  expires       DateTime?
+  expires       DateTime? // This is correct, keep it as DateTime
   accessToken   String
   userId        BigInt?
   firstName     String?
@@ -29,4 +29,15 @@ model Session {
   locale        String?
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
+  solarConfigs  SolarConfig[]
+}
+
+model SolarConfig {
+  id           String   @id @default(uuid())
+  sessionId    String
+  address      String
+  roofType     String
+  consumption  Int
+  createdAt    DateTime @default(now()) // This is correct, keep it as DateTime
+  session      Session  @relation(fields: [sessionId], references: [id])
 }

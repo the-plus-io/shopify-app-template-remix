@@ -3,7 +3,7 @@
 client_id = "da111470b7eb8b01acad44df58f94982"
 name = "Solar Konfigurator"
 handle = "solar-konfigurator"
-application_url = "https://sculpture-vaccine-marc-primary.trycloudflare.com"
+application_url = "https://survivors-wanna-got-recipe.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://sculpture-vaccine-marc-primary.trycloudflare.com/auth/callback",
-  "https://sculpture-vaccine-marc-primary.trycloudflare.com/auth/shopify/callback",
-  "https://sculpture-vaccine-marc-primary.trycloudflare.com/api/auth/callback"
+  "https://survivors-wanna-got-recipe.trycloudflare.com/auth/callback",
+  "https://survivors-wanna-got-recipe.trycloudflare.com/auth/shopify/callback",
+  "https://survivors-wanna-got-recipe.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
