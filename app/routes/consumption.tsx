@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RangeSlider, TextField, Stack } from '@shopify/polaris';
+import { RangeSlider, TextField, BlockStack } from '@shopify/polaris';
 import { useNavigate } from '@remix-run/react';
 import SolarConfiguratorLayout from '../components/SolarConfiguratorLayout';
 import { prisma } from '../db.server';
@@ -35,7 +35,7 @@ export default function ConsumptionStep(): JSX.Element {
       backUrl="/solar-config/roof-type"
       nextUrl="/solar-config/recommendation"
     >
-      <Stack vertical>
+      <BlockStack vertical>
         <RangeSlider
           label={t('consumption')}
           value={consumption}
@@ -53,7 +53,7 @@ export default function ConsumptionStep(): JSX.Element {
           suffix={t('kWh')}
           type="number"
         />
-      </Stack>
+      </BlockStack>
     </SolarConfiguratorLayout>
   );
 }

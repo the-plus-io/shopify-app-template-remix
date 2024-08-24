@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Layout, Page, Select } from '@shopify/polaris';
+import { Card, BlockStack, Page, Select } from '@shopify/polaris';
 import { useTranslation } from 'react-i18next';
 
 type FormPlacement = 'top' | 'bottom' | 'sidebar';
@@ -15,8 +15,8 @@ export default function AdminPanel(): JSX.Element {
 
   return (
     <Page title="Admin Panel">
-      <Layout>
-        <Layout.Section>
+      <BlockStack>
+        <BlockStack.Section>
           <Card>
             <Select
               label={t('formPlacement')}
@@ -29,8 +29,8 @@ export default function AdminPanel(): JSX.Element {
               value={formPlacement}
             />
           </Card>
-        </Layout.Section>
-      </Layout>
+        </BlockStack.Section>
+      </BlockStack>
     </Page>
   );
 }

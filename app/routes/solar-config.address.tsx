@@ -11,7 +11,7 @@ export default function AddressStep(): JSX.Element {
   const [address, setAddress] = useState<string>('');
 
   const { ref } = usePlacesWidget<HTMLInputElement>({
-    apiKey: process.env.GOOGLE_MAPS_API_KEY,
+    apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
     onPlaceSelected: (place: google.maps.places.PlaceResult) => {
       setAddress(place.formatted_address || '');
     },
