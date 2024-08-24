@@ -3,7 +3,7 @@
 client_id = "da111470b7eb8b01acad44df58f94982"
 name = "Solar Konfigurator"
 handle = "solar-konfigurator"
-application_url = "https://sku-die-hierarchy-driver.trycloudflare.com"
+application_url = "https://sculpture-vaccine-marc-primary.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://sku-die-hierarchy-driver.trycloudflare.com/auth/callback",
-  "https://sku-die-hierarchy-driver.trycloudflare.com/auth/shopify/callback",
-  "https://sku-die-hierarchy-driver.trycloudflare.com/api/auth/callback"
+  "https://sculpture-vaccine-marc-primary.trycloudflare.com/auth/callback",
+  "https://sculpture-vaccine-marc-primary.trycloudflare.com/auth/shopify/callback",
+  "https://sculpture-vaccine-marc-primary.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
