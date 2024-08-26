@@ -1,5 +1,5 @@
 declare module 'react-google-autocomplete' {
-    import { ComponentType } from 'react';
+    import type { ComponentType } from 'react';
     
     interface UsePlacesWidgetOptions {
       apiKey: string;

@@ -30,7 +30,7 @@ export default function AddressStep(): JSX.Element {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Save address to database
+    // Save address to database    
     // For now, we'll just navigate to the next step
     navigate('/solar-config/roof-type');
   };
