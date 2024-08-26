@@ -8,13 +8,15 @@ interface SolarConfiguratorLayoutProps {
   title: string;
   backUrl?: string;
   nextUrl?: string;
+  onNext?: () => Promise<void>;
 }
 
 export default function SolarConfiguratorLayout({ 
   children, 
   title, 
   backUrl, 
-  nextUrl 
+  nextUrl,
+  onNext
 }: SolarConfiguratorLayoutProps) {
   const { t } = useTranslation();
 
@@ -23,7 +25,11 @@ export default function SolarConfiguratorLayout({
       <Page
         title={title}
         backAction={backUrl ? { content: t('back'), url: backUrl } : undefined}
-        primaryAction={nextUrl ? { content: t('next'), url: nextUrl } : undefined}
+        primaryAction={nextUrl ? { 
+          content: t('next'), 
+          url: nextUrl,
+          onAction: onNext 
+        } : undefined}
       >
         <Layout>
           <Layout.Section>{children}</Layout.Section>

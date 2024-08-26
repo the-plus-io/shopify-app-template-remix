@@ -8,18 +8,26 @@ import {
 
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import './i18n';
-
-
+import './i18n'; // This import is necessary to initialize i18n, even if not used directly
 
 export default function App() {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    i18n.changeLanguage('de');
+    const changeLanguage = async () => {
+      try {
+        await i18n.changeLanguage('de');
+        console.log('Language changed to German');
+      } catch (error) {
+        console.error('Failed to change language:', error);
+      }
+    };
+
+    changeLanguage();
   }, [i18n]);
+
   return (
-    <html>
+    <html lang={i18n.language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

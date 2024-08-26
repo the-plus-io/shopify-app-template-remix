@@ -15,9 +15,9 @@ export default function AdminPanel(): JSX.Element {
 
   return (
     <Page title="Admin Panel">
-      <BlockStack>
-        <BlockStack.Section>
-          <Card>
+      <BlockStack gap="400">
+        <Card>
+          <BlockStack gap="400">
             <Select
               label={t('formPlacement')}
               options={[
@@ -28,8 +28,8 @@ export default function AdminPanel(): JSX.Element {
               onChange={handleFormPlacementChange}
               value={formPlacement}
             />
-          </Card>
-        </BlockStack.Section>
+          </BlockStack>
+        </Card>
       </BlockStack>
     </Page>
   );

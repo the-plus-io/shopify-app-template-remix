@@ -1,32 +1,22 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RangeSlider, TextField, BlockStack } from '@shopify/polaris';
-import { useNavigate } from '@remix-run/react';
+import { useSubmit } from '@remix-run/react';
 import SolarConfiguratorLayout from '../components/SolarConfiguratorLayout';
-import { prisma } from '../db.server';
 
 export default function ConsumptionStep(): JSX.Element {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const submit = useSubmit();
   const [consumption, setConsumption] = useState<number>(3500);
 
-  const handleConsumptionChange = (value: string) => {
-    setConsumption(Number(value));
+  const handleConsumptionChange = (value: number) => {
+    setConsumption(value);
   };
 
-  const handleSubmit = async () => {
-    try {
-      const session = await getSession();
-      await prisma.solarConfig.update({
-        where: { sessionId: session.id },
-        data: { consumption: consumption },
-      });
-
-      navigate('/solar-config/recommendation');
-    } catch (error) {
-      console.error('Error saving consumption:', error);
-      // Handle error (e.g., show error message to user)
-    }
+  const handleNext = async (): Promise<void> => {
+    const formData = new FormData();
+    formData.append('consumption', consumption.toString());
+    await submit(formData, { method: 'post' });
   };
 
   return (
@@ -34,8 +24,9 @@ export default function ConsumptionStep(): JSX.Element {
       title={t('enterConsumption')} 
       backUrl="/solar-config/roof-type"
       nextUrl="/solar-config/recommendation"
+      onNext={handleNext}
     >
-      <BlockStack vertical>
+      <BlockStack gap="400">
         <RangeSlider
           label={t('consumption')}
           value={consumption}
@@ -48,7 +39,7 @@ export default function ConsumptionStep(): JSX.Element {
         <TextField
           label={t('consumption')}
           value={consumption.toString()}
-          onChange={handleConsumptionChange}
+          onChange={(value) => handleConsumptionChange(Number(value))}
           autoComplete="off"
           suffix={t('kWh')}
           type="number"

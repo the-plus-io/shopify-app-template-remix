@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, TextContainer, Spinner } from '@shopify/polaris';
-import { useNavigate } from '@remix-run/react';
+import { Card, Text, Spinner, BlockStack, Link } from '@shopify/polaris';
+import { useSubmit } from '@remix-run/react';
 import SolarConfiguratorLayout from '../components/SolarConfiguratorLayout';
-import { prisma } from '../db.server';
+
+interface Recommendation {
+  productName: string;
+  description: string;
+  price: string;
+  url: string;
+}
 
 export default function RecommendationStep() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [recommendation, setRecommendation] = useState(null);
+  const submit = useSubmit();
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecommendation = async () => {
       try {
-        const session = await getSession(request);
-        const solarConfig = await prisma.solarConfig.findUnique({
-          where: { sessionId: session.id },
-        });
-
-        // Here you would typically call an external service or use your own logic
-        // to generate a recommendation based on the solar configuration
-        const mockRecommendation = {
+        // Simulating API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const mockRecommendation: Recommendation = {
           productName: 'SolarMax 5000',
           description: 'Perfect for your roof type and energy consumption.',
           price: '€12,000',
           url: '/products/solarmax-5000',
         };
-
         setRecommendation(mockRecommendation);
       } catch (error) {
         console.error('Error fetching recommendation:', error);
@@ -40,36 +40,43 @@ export default function RecommendationStep() {
     fetchRecommendation();
   }, []);
 
+  const handleNext = async (): Promise<void> => {
+    if (recommendation) {
+      const formData = new FormData();
+      formData.append('productName', recommendation.productName);
+      await submit(formData, { method: 'post' });
+    }
+  };
+
   return (
     <SolarConfiguratorLayout 
       title={t('recommendation')} 
       backUrl="/solar-config/consumption"
+      onNext={handleNext}
     >
-      {isLoading ? (
-        <Card sectioned>
-          <TextContainer>
-            <Spinner accessibilityLabel={t('loading')} size="large" />
-            <p>{t('generatingRecommendation')}</p>
-          </TextContainer>
-        </Card>
-      ) : recommendation ? (
-        <Card
-          title={recommendation.productName}
-          primaryFooterAction={{
-            content: t('viewProduct'),
-            url: recommendation.url,
-          }}
-        >
-          <Card.Section>
-            <p>{recommendation.description}</p>
-            <p>{t('estimatedPrice')}: {recommendation.price}</p>
-          </Card.Section>
-        </Card>
-      ) : (
-        <Card sectioned>
-          <p>{t('noRecommendationAvailable')}</p>
-        </Card>
-      )}
+      <BlockStack gap="400">
+        {isLoading ? (
+          <Card>
+            <BlockStack gap="400">
+              <Spinner accessibilityLabel={t('loading')} size="large" />
+              <Text as="p" variant="bodyMd">{t('generatingRecommendation')}</Text>
+            </BlockStack>
+          </Card>
+        ) : recommendation ? (
+          <Card>
+            <BlockStack gap="400">
+              <Text as="h2" variant="headingMd">{recommendation.productName}</Text>
+              <Text as="p" variant="bodyMd">{recommendation.description}</Text>
+              <Text as="p" variant="bodyMd">{t('estimatedPrice')}: {recommendation.price}</Text>
+              <Link url={recommendation.url}>{t('viewProduct')}</Link>
+            </BlockStack>
+          </Card>
+        ) : (
+          <Card>
+            <Text as="p" variant="bodyMd">{t('noRecommendationAvailable')}</Text>
+          </Card>
+        )}
+      </BlockStack>
     </SolarConfiguratorLayout>
   );
 }

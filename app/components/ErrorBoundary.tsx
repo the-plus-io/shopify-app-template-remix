@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 import { Banner } from '@shopify/polaris';
 import type { TFunction } from 'i18next'; // Import TFunction from 'i18next'
 
