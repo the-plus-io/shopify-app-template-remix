@@ -1,38 +1,45 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, TextField } from '@shopify/polaris';
+import { Form, TextField, Button } from '@shopify/polaris';
 import { useNavigate } from '@remix-run/react';
+import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import SolarConfiguratorLayout from '../components/SolarConfiguratorLayout';
-import { usePlacesWidget } from "react-google-autocomplete";
+
+const mapContainerStyle = {
+  width: '100%',
+  height: '400px'
+};
+
+const center = {
+  lat: 40.7128, // Default to New York City
+  lng: -74.0060
+};
 
 export default function AddressStep(): JSX.Element {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [address, setAddress] = useState<string>('');
+  const [address, setAddress] = React.useState<string>('');
+  const [mapCenter, setMapCenter] = React.useState(center);
 
-  const handleChange = useCallback((newValue: string) => {
+  const handleChange = (newValue: string) => {
     setAddress(newValue);
-  }, []);
-
-  const { ref } = usePlacesWidget<HTMLInputElement>({
-    apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
-    onPlaceSelected: (place: google.maps.places.PlaceResult) => {
-      setAddress(place.formatted_address || '');
-    },
-  });
-
-  useEffect(() => {
-    if (ref.current) {
-      const input = ref.current;
-      input.addEventListener('change', (e) => handleChange((e.target as HTMLInputElement).value));
-    }
-  }, [ref, handleChange]);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Save address to database    
-    // For now, we'll just navigate to the next step
+    // Here you would typically geocode the address and update the map center
+    // For demonstration, we'll just navigate to the next step
     navigate('/solar-config/roof-type');
+  };
+
+  const handleMapClick = (event: google.maps.MapMouseEvent) => {
+    if (event.latLng) {
+      setMapCenter({
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      });
+      // Here you would typically reverse geocode to get the address
+    }
   };
 
   return (
@@ -44,7 +51,18 @@ export default function AddressStep(): JSX.Element {
           onChange={handleChange}
           autoComplete="off"
         />
+        <Button submit>{t('next')}</Button>
       </Form>
+      <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={mapCenter}
+          zoom={10}
+          onClick={handleMapClick}
+        >
+          <Marker position={mapCenter} />
+        </GoogleMap>
+      </LoadScript>
     </SolarConfiguratorLayout>
   );
 }
