@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 import { Frame, Layout, Page } from '@shopify/polaris';
-import { useTranslation } from 'react-i18next';
 
 interface SolarConfiguratorLayoutProps {
   children: ReactNode;
@@ -18,15 +17,14 @@ export default function SolarConfiguratorLayout({
   nextUrl,
   onNext
 }: SolarConfiguratorLayoutProps) {
-  const { t } = useTranslation();
 
   return (
     <Frame>
       <Page
         title={title}
-        backAction={backUrl ? { content: t('back'), url: backUrl } : undefined}
+        backAction={backUrl ? { content: 'back', url: backUrl } : undefined}
         primaryAction={nextUrl ? { 
-          content: t('next'), 
+          content: 'next', 
           url: nextUrl,
           onAction: onNext 
         } : undefined}

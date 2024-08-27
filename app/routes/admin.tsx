@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Card, BlockStack, Page, Select } from '@shopify/polaris';
-import { useTranslation } from 'react-i18next';
 
 type FormPlacement = 'top' | 'bottom' | 'sidebar';
 
 export default function AdminPanel(): JSX.Element {
-  const { t } = useTranslation();
   const [formPlacement, setFormPlacement] = useState<FormPlacement>('top');
 
   const handleFormPlacementChange = (value: string) => {
@@ -19,11 +17,11 @@ export default function AdminPanel(): JSX.Element {
         <Card>
           <BlockStack gap="400">
             <Select
-              label={t('formPlacement')}
+              label={'formPlacement'}
               options={[
-                { label: t('top'), value: 'top' },
-                { label: t('bottom'), value: 'bottom' },
-                { label: t('sidebar'), value: 'sidebar' },
+                { label: 'top', value: 'top' },
+                { label: 'bottom', value: 'bottom' },
+                { label: 'sidebar', value: 'sidebar' },
               ]}
               onChange={handleFormPlacementChange}
               value={formPlacement}

@@ -1,11 +1,9 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 import { Banner } from '@shopify/polaris';
-import type { TFunction } from 'i18next'; // Import TFunction from 'i18next'
 
 interface ErrorBoundaryProps {
   children: ReactNode;
-  t: TFunction; // Add t function to props
 }
 
 interface ErrorBoundaryState {
@@ -30,8 +28,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     if (this.state.hasError) {
       return (
         <Banner tone="critical">
-          {this.props.t('errorOccurred')}
-        </Banner>
+      </Banner>
       );
     }
 

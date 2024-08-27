@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Form, TextField, Button } from '@shopify/polaris';
 import { useNavigate } from '@remix-run/react';
 import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
@@ -16,7 +15,6 @@ const center = {
 };
 
 export default function AddressStep(): JSX.Element {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [address, setAddress] = React.useState<string>('');
   const [mapCenter, setMapCenter] = React.useState(center);
@@ -43,15 +41,15 @@ export default function AddressStep(): JSX.Element {
   };
 
   return (
-    <SolarConfiguratorLayout title={t('address')} nextUrl="/solar-config/roof-type">
+    <SolarConfiguratorLayout title={'address'} nextUrl="/solar-config/roof-type">
       <Form onSubmit={handleSubmit}>
         <TextField
-          label={t('address')}
+          label={'address'}
           value={address}
           onChange={handleChange}
           autoComplete="off"
         />
-        <Button submit>{t('next')}</Button>
+        <Button submit>{'next'}</Button>
       </Form>
       <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY || ''}>
         <GoogleMap

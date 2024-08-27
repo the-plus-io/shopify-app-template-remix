@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Card, Layout, SkeletonBodyText, Thumbnail } from '@shopify/polaris';
 import { useNavigate } from '@remix-run/react';
 import SolarConfiguratorLayout from '../components/SolarConfiguratorLayout';
@@ -17,7 +16,6 @@ const roofTypes: RoofType[] = [
 ];
 
 export default function RoofTypeStep(): JSX.Element {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedRoofType, setSelectedRoofType] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,14 +43,14 @@ export default function RoofTypeStep(): JSX.Element {
 
   return (
     <SolarConfiguratorLayout 
-      title={t('selectRoofType')} 
+      title={'selectRoofType'} 
       backUrl="/solar-config/address"
       nextUrl="/solar-config/consumption"
     >
       {isLoading ? (
         <Card padding="400">
           <SkeletonBodyText lines={3} />
-          <p>{t('analyzingRoof')}</p>
+          <p>{'analyzingRoof'}</p>
         </Card>
       ) : (
         <Layout>
